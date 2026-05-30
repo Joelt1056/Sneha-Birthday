@@ -53,17 +53,29 @@
   /* ---- BIRTHDAY TEXT ---- */
   .birthday-text {
     font-family: 'Dancing Script', cursive;
-    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-size: clamp(2rem, 8vw, 5.5rem);
     color: var(--rose);
     text-align: center;
     opacity: 0;
     transform: translateY(20px) scale(0.8);
     transition: opacity 0.8s cubic-bezier(.34,1.56,.64,1), transform 0.8s cubic-bezier(.34,1.56,.64,1);
     text-shadow: 0 4px 30px rgba(244,63,114,0.3);
-    margin-top: 32px;
+    margin-top: 47px;
     letter-spacing: 1px;
     pointer-events: none;
     user-select: none;
+    width: 100%;
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+  .hb-line { display: inline; }
+  @media (max-width: 480px) {
+    .birthday-text {
+      font-size: clamp(1rem, 9.5vw, 2.8rem);
+      letter-spacing: 0;
+      white-space: normal;
+    }
+    .hb-line { display: block; }
   }
   .birthday-text.show { opacity: 1; transform: translateY(0) scale(1); }
   .birthday-text span { display: inline-block; animation: none; }
@@ -286,7 +298,7 @@
     <div class="tap-hint" id="tapHint">Tap to open</div>
   </div>
   <div class="birthday-text" id="birthdayText">
-    <span style="animation-delay:0.0s">H</span><span style="animation-delay:0.05s">a</span><span style="animation-delay:0.10s">p</span><span style="animation-delay:0.15s">p</span><span style="animation-delay:0.20s">y</span>&nbsp;<span style="animation-delay:0.30s">B</span><span style="animation-delay:0.35s">i</span><span style="animation-delay:0.40s">r</span><span style="animation-delay:0.45s">t</span><span style="animation-delay:0.50s">h</span><span style="animation-delay:0.55s">d</span><span style="animation-delay:0.60s">a</span><span style="animation-delay:0.65s">y</span>&nbsp;<span style="animation-delay:0.75s;color:#f5c842;">S</span><span style="animation-delay:0.80s;color:#f5c842;">n</span><span style="animation-delay:0.85s;color:#f5c842;">e</span><span style="animation-delay:0.90s;color:#f5c842;">h</span><span style="animation-delay:0.95s;color:#f5c842;">a</span>
+    <span class="hb-line"><span style="animation-delay:0.0s">H</span><span style="animation-delay:0.05s">a</span><span style="animation-delay:0.10s">p</span><span style="animation-delay:0.15s">p</span><span style="animation-delay:0.20s">y</span>&nbsp;<span style="animation-delay:0.30s">B</span><span style="animation-delay:0.35s">i</span><span style="animation-delay:0.40s">r</span><span style="animation-delay:0.45s">t</span><span style="animation-delay:0.50s">h</span><span style="animation-delay:0.55s">d</span><span style="animation-delay:0.60s">a</span><span style="animation-delay:0.65s">y</span></span><span class="hb-line"><span style="animation-delay:0.75s;color:#f5c842;">S</span><span style="animation-delay:0.80s;color:#f5c842;">n</span><span style="animation-delay:0.85s;color:#f5c842;">e</span><span style="animation-delay:0.90s;color:#f5c842;">h</span><span style="animation-delay:0.95s;color:#f5c842;">a</span></span>
   </div>
   <button class="view-more-btn" id="viewMoreBtn" onclick="showGallery()">View More</button>
 </div>
