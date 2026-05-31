@@ -22,50 +22,22 @@
       radial-gradient(ellipse at 20% 50%, #ffe0ec 0%, transparent 60%),
       radial-gradient(ellipse at 80% 20%, #fff0c2 0%, transparent 50%),
       radial-gradient(ellipse at 60% 80%, #fde0f0 0%, transparent 50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-    position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; overflow-x: hidden; position: relative;
   }
-  .dot {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.15;
-    pointer-events: none;
-    animation: floatDot linear infinite;
-  }
+  .dot { position: absolute; border-radius: 50%; opacity: 0.15; pointer-events: none; animation: floatDot linear infinite; }
   @keyframes floatDot {
     0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-    10%  { opacity: 0.15; }
-    90%  { opacity: 0.15; }
+    10%  { opacity: 0.15; } 90% { opacity: 0.15; }
     100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
   }
-  .scene {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 10;
-  }
+  .scene { position: relative; display: flex; flex-direction: column; align-items: center; z-index: 10; }
   .birthday-text {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 8vw, 5.5rem);
-    color: var(--rose);
-    text-align: center;
-    opacity: 0;
-    transform: translateY(20px) scale(0.8);
+    font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 8vw, 5.5rem);
+    color: var(--rose); text-align: center; opacity: 0; transform: translateY(20px) scale(0.8);
     transition: opacity 0.8s cubic-bezier(.34,1.56,.64,1), transform 0.8s cubic-bezier(.34,1.56,.64,1);
-    text-shadow: 0 4px 30px rgba(244,63,114,0.3);
-    margin-top: 47px;
-    letter-spacing: 1px;
-    pointer-events: none;
-    user-select: none;
-    width: 100%;
-    padding: 0 12px;
-    white-space: nowrap;
+    text-shadow: 0 4px 30px rgba(244,63,114,0.3); margin-top: 47px; letter-spacing: 1px;
+    pointer-events: none; user-select: none; width: 100%; padding: 0 12px; white-space: nowrap;
   }
   .hb-line { display: inline; }
   @media (max-width: 480px) {
@@ -75,293 +47,113 @@
   .birthday-text.show { opacity: 1; transform: translateY(0) scale(1); }
   .birthday-text span { display: inline-block; animation: none; }
   .birthday-text.show span { animation: letterBounce 0.6s cubic-bezier(.34,1.56,.64,1) both; }
-  @keyframes letterBounce {
-    0%   { transform: translateY(15px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
+  @keyframes letterBounce { 0% { transform: translateY(15px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
   .photo-wrapper {
-    position: absolute;
-    bottom: 40%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 8;
-    overflow: hidden;
-    width: 220px;
-    height: 0;
-    border-radius: 16px;
+    position: absolute; bottom: 40%; left: 50%; transform: translateX(-50%);
+    z-index: 8; overflow: hidden; width: 220px; height: 0; border-radius: 16px;
     transition: height 0.9s cubic-bezier(.22,1,.36,1), box-shadow 0.9s ease;
   }
   .photo-wrapper.open { height: 320px; box-shadow: 0 -12px 50px rgba(244,63,114,0.25); }
   .photo-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 16px; }
   .envelope-wrapper {
-    position: relative;
-    z-index: 20;
-    cursor: pointer;
-    user-select: none;
-    filter: drop-shadow(0 10px 40px rgba(244,63,114,0.15));
-    transition: filter 0.3s ease, transform 0.3s ease;
+    position: relative; z-index: 20; cursor: pointer; user-select: none;
+    filter: drop-shadow(0 10px 40px rgba(244,63,114,0.15)); transition: filter 0.3s ease, transform 0.3s ease;
   }
   .envelope-wrapper:hover { filter: drop-shadow(0 16px 50px rgba(244,63,114,0.3)); transform: scale(1.02); }
   .envelope-wrapper.opened { cursor: default; }
   .envelope { width: 300px; height: 200px; position: relative; }
-  .env-body {
-    position: absolute; bottom: 0; left: 0;
-    width: 300px; height: 180px;
-    background: var(--envelope);
-    border-radius: 4px 4px 12px 12px;
-    overflow: hidden;
-  }
-  .env-body::before {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 0; border-style: solid;
-    border-width: 0 0 90px 150px;
-    border-color: transparent transparent var(--envelope-flap) transparent;
-  }
-  .env-body::after {
-    content: ''; position: absolute; bottom: 0; right: 0;
-    width: 0; height: 0; border-style: solid;
-    border-width: 0 150px 90px 0;
-    border-color: transparent var(--envelope-flap) transparent transparent;
-  }
-  .env-left {
-    position: absolute; bottom: 0; left: 0;
-    width: 0; height: 0; border-style: solid;
-    border-width: 90px 0 90px 150px;
-    border-color: transparent transparent transparent var(--envelope-dark);
-  }
-  .env-right {
-    position: absolute; bottom: 0; right: 0;
-    width: 0; height: 0; border-style: solid;
-    border-width: 90px 150px 90px 0;
-    border-color: transparent var(--envelope-dark) transparent transparent;
-  }
-  .env-flap {
-    position: absolute; top: 0; left: 0;
-    width: 300px; height: 0; border-style: solid;
-    border-width: 105px 150px 0 150px;
-    border-color: var(--envelope-flap) transparent transparent transparent;
-    transform-origin: top center;
-    transition: transform 0.7s cubic-bezier(.4,0,.2,1);
-    z-index: 3;
-  }
+  .env-body { position: absolute; bottom: 0; left: 0; width: 300px; height: 180px; background: var(--envelope); border-radius: 4px 4px 12px 12px; overflow: hidden; }
+  .env-body::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 0 0 90px 150px; border-color: transparent transparent var(--envelope-flap) transparent; }
+  .env-body::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 150px 90px 0; border-color: transparent var(--envelope-flap) transparent transparent; }
+  .env-left { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 90px 0 90px 150px; border-color: transparent transparent transparent var(--envelope-dark); }
+  .env-right { position: absolute; bottom: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 90px 150px 90px 0; border-color: transparent var(--envelope-dark) transparent transparent; }
+  .env-flap { position: absolute; top: 0; left: 0; width: 300px; height: 0; border-style: solid; border-width: 105px 150px 0 150px; border-color: var(--envelope-flap) transparent transparent transparent; transform-origin: top center; transition: transform 0.7s cubic-bezier(.4,0,.2,1); z-index: 3; }
   .env-flap.open { transform: rotateX(180deg); }
-  .env-seal {
-    position: absolute; top: 70px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.8rem; z-index: 4;
-    transition: opacity 0.3s ease, transform 0.5s ease;
-  }
+  .env-seal { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); font-size: 1.8rem; z-index: 4; transition: opacity 0.3s ease, transform 0.5s ease; }
   .env-seal.hide { opacity: 0; transform: translateX(-50%) scale(0); }
-  .tap-hint {
-    position: absolute; bottom: -36px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.72rem; color: rgba(150,60,90,0.6);
-    letter-spacing: 0.12em; text-transform: uppercase;
-    white-space: nowrap; animation: hintPulse 2s ease-in-out infinite;
-    pointer-events: none;
-  }
+  .tap-hint { position: absolute; bottom: -36px; left: 50%; transform: translateX(-50%); font-size: 0.72rem; color: rgba(150,60,90,0.6); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; animation: hintPulse 2s ease-in-out infinite; pointer-events: none; }
   @keyframes hintPulse { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
   .tap-hint.hide { display: none; }
-  .confetti-container {
-    position: fixed; inset: 0;
-    pointer-events: none; z-index: 100; overflow: hidden;
-  }
-  .confetti-piece {
-    position: absolute; top: -20px; border-radius: 2px;
-    animation: confettiFall linear forwards; opacity: 0;
-  }
-  @keyframes confettiFall {
-    0%   { opacity: 1; transform: translateY(0) rotate(0deg) translateX(0); }
-    100% { opacity: 0; transform: translateY(105vh) rotate(720deg) translateX(var(--drift)); }
-  }
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: hidden; }
+  .confetti-piece { position: absolute; top: -20px; border-radius: 2px; animation: confettiFall linear forwards; opacity: 0; }
+  @keyframes confettiFall { 0% { opacity: 1; transform: translateY(0) rotate(0deg) translateX(0); } 100% { opacity: 0; transform: translateY(105vh) rotate(720deg) translateX(var(--drift)); } }
   .view-more-btn {
-    opacity: 0;
-    transform: translateY(10px);
-    margin-top: 28px;
-    background: transparent;
-    border: 2px solid var(--rose);
-    color: var(--rose);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 10px 28px;
-    border-radius: 50px;
-    cursor: pointer;
-    pointer-events: none;
+    opacity: 0; transform: translateY(10px); margin-top: 28px; background: transparent;
+    border: 2px solid var(--rose); color: var(--rose); font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 10px 28px;
+    border-radius: 50px; cursor: pointer; pointer-events: none;
     transition: opacity 0.6s ease, transform 0.6s ease, background 0.2s ease, color 0.2s ease;
   }
   .view-more-btn.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .view-more-btn:hover { background: var(--rose); color: white; }
-
-  /* ---- GALLERY PAGE ---- */
-  .gallery-page {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    padding: 48px 24px 48px;
-    width: 100%;
-    min-height: 100vh;
-    z-index: 10;
-    position: relative;
-  }
+  .gallery-page { display: none; flex-direction: column; align-items: center; padding: 48px 24px 48px; width: 100%; min-height: 100vh; z-index: 10; position: relative; }
   .gallery-page.show { display: flex; }
-  .gallery-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    color: var(--rose);
-    text-shadow: 0 4px 20px rgba(244,63,114,0.25);
-    margin-bottom: 12px;
-    text-align: center;
-  }
-  .gallery-subtitle {
-    font-size: 0.78rem;
-    color: rgba(194,52,90,0.6);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    animation: hintPulse 2s ease-in-out infinite;
-  }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    width: 100%;
-    max-width: 720px;
-  }
-  @media (max-width: 480px) {
-    .gallery-grid { grid-template-columns: 1fr; max-width: 340px; }
-  }
+  .gallery-title { font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 6vw, 3.5rem); color: var(--rose); text-shadow: 0 4px 20px rgba(244,63,114,0.25); margin-bottom: 12px; text-align: center; }
+  .gallery-subtitle { font-size: 0.78rem; color: rgba(194,52,90,0.6); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 32px; animation: hintPulse 2s ease-in-out infinite; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; max-width: 720px; }
+  @media (max-width: 480px) { .gallery-grid { grid-template-columns: 1fr; max-width: 340px; } }
+
+  /* ---- FRAME & FLIP CARD ---- */
   .frame {
-    aspect-ratio: 3/4;
-    border-radius: 16px;
-    overflow: visible;
-    opacity: 0;
-    transform: translateY(24px) scale(0.95);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    cursor: pointer;
-    perspective: 1000px;
-    position: relative;
+    aspect-ratio: 3/4; border-radius: 16px; overflow: visible; opacity: 0;
+    transform: translateY(24px) scale(0.95); transition: opacity 0.5s ease, transform 0.5s ease;
+    cursor: pointer; perspective: 1000px; position: relative;
   }
   .frame.show { opacity: 1; transform: translateY(0) scale(1); }
-  .frame-inner {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(.4,0,.2,1);
-    border-radius: 16px;
-  }
+  .frame-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(.4,0,.2,1); border-radius: 16px; }
   .frame.flipped .frame-inner { transform: rotateY(180deg); }
   .frame-front, .frame-back {
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    overflow: hidden;
+    position: absolute; inset: 0; border-radius: 16px;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden;
   }
-  .frame-front {
-    border: 3px solid #f3cfa0;
-    box-shadow: 0 6px 24px rgba(244,63,114,0.1);
-  }
+  .frame-front { border: 3px solid #f3cfa0; box-shadow: 0 6px 24px rgba(244,63,114,0.1); }
   .frame-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .frame-back {
     background: linear-gradient(160deg, #fff0f5 0%, #ffecd6 100%);
-    border: 3px solid #f3cfa0;
-    box-shadow: 0 6px 24px rgba(244,63,114,0.15);
+    border: 3px solid #f3cfa0; box-shadow: 0 6px 24px rgba(244,63,114,0.15);
     transform: rotateY(180deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    /* key: fill height, clip overflow, center content */
+    display: flex; align-items: center; justify-content: center;
+    padding: 14px; overflow: hidden;
   }
   .frame-back p {
     font-family: 'Dancing Script', cursive;
-    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
-    color: #c2345a;
-    text-align: center;
-    line-height: 1.5;
+    /* font-size set by JS fitText — no clamp here */
+    color: #c2345a; text-align: center; line-height: 1.45;
+    word-break: break-word; overflow-wrap: break-word;
+    max-width: 100%;
   }
-  @media (max-width: 480px) { .frame-back p { font-size: 1.1rem; } }
+
   .frame-click-hint {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(244, 63, 114, 0.78);
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 5px 13px;
-    border-radius: 50px;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 5;
-    animation: hintPulse 2s ease-in-out infinite;
-    transition: opacity 0.3s ease;
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(244,63,114,0.78); color: white; font-family: 'DM Sans', sans-serif;
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 13px; border-radius: 50px; white-space: nowrap;
+    pointer-events: none; z-index: 5; animation: hintPulse 2s ease-in-out infinite; transition: opacity 0.3s ease;
   }
   .frame.flipped .frame-click-hint { opacity: 0; }
-
-  /* ---- NAV BUTTONS ROW ---- */
-  .gallery-nav {
-    display: flex;
-    gap: 16px;
-    margin-top: 48px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  .gallery-nav { display: flex; gap: 16px; margin-top: 48px; flex-wrap: wrap; justify-content: center; }
   .nav-btn {
-    background: transparent;
-    border: 2px solid var(--rose);
-    color: var(--rose);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 10px 28px;
-    border-radius: 50px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: background 0.2s ease, color 0.2s ease;
+    background: transparent; border: 2px solid var(--rose); color: var(--rose);
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 10px 28px; border-radius: 50px; cursor: pointer;
+    display: flex; align-items: center; gap: 10px; transition: background 0.2s ease, color 0.2s ease;
   }
   .nav-btn:hover { background: var(--rose); color: white; }
   .nav-btn .arrow { font-size: 1rem; transition: transform 0.2s ease; }
   .nav-btn.back:hover .arrow { transform: translateX(-4px); }
   .nav-btn.next:hover .arrow { transform: translateX(4px); }
-  .nav-btn:disabled { opacity: 0.3; pointer-events: none; }
-
-  /* ---- SHATTER ---- */
-  .shatter-piece {
-    position: absolute;
-    pointer-events: none;
-    z-index: 25;
-    animation: shatterFly var(--dur) cubic-bezier(.2,.8,.4,1) forwards;
-    transform-origin: center center;
-  }
-  @keyframes shatterFly {
-    0%   { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); }
-    30%  { opacity: 1; }
-    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3); }
-  }
+  .shatter-piece { position: absolute; pointer-events: none; z-index: 25; animation: shatterFly var(--dur) cubic-bezier(.2,.8,.4,1) forwards; transform-origin: center center; }
+  @keyframes shatterFly { 0% { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3); } }
 </style>
 </head>
 <body>
 <div class="confetti-container" id="confetti"></div>
 <div class="scene">
-  <div class="photo-wrapper" id="photoWrapper">
-    <img src="rue.png" alt="Sneha">
-  </div>
+  <div class="photo-wrapper" id="photoWrapper"><img src="rue.png" alt="Sneha"></div>
   <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
     <div class="envelope" id="envelope">
-      <div class="env-body">
-        <div class="env-left"></div>
-        <div class="env-right"></div>
-      </div>
+      <div class="env-body"><div class="env-left"></div><div class="env-right"></div></div>
       <div class="env-flap" id="envFlap"></div>
       <div class="env-seal" id="envSeal">💌</div>
     </div>
@@ -373,7 +165,6 @@
   <button class="view-more-btn" id="viewMoreBtn" onclick="showGallery()">View More</button>
 </div>
 
-<!-- GALLERY PAGE -->
 <div class="gallery-page" id="galleryPage">
   <div class="gallery-title" id="galleryTitle">Birthday Girl 🌸</div>
   <div class="gallery-subtitle">Tap a photo to flip it</div>
@@ -390,7 +181,6 @@
   song.loop = true;
   swoosh.addEventListener('ended', () => { song.play().catch(() => {}); });
 
-  /* floating dots */
   const dotColors = ['#f43f72','#f5c842','#ffc0d0','#ffdb70','#ff8fab'];
   for (let i = 0; i < 18; i++) {
     const d = document.createElement('div');
@@ -400,14 +190,13 @@
     document.body.appendChild(d);
   }
 
-  /* ---- DATA ---- */
   const pages = [
     {
       title: 'Joel Tomy 🌸',
       photos: [
         { src: 'first.jpeg',    caption: 'That one snowball fight during that one walk' },
         { src: 'face.png',      caption: 'If only Joel Alex slapped you harder' },
-        { src: 'hair.jpeg',     caption: 'The buzz would\'ve gone hard' },
+        { src: 'hair.jpeg',     caption: "The buzz would've gone hard" },
         { src: 'backstab.jpeg', caption: 'The day enchanted escape became an emotional Tear Fest' },
         { src: 'flute.jpeg',    caption: 'Stick to the flute please 🫶' },
         { src: 'smile.jpeg',    caption: 'Say cheese 📸' },
@@ -417,11 +206,11 @@
       title: 'Sona 🌸',
       photos: [
         { src: 'sona1.PNG',  caption: 'You are very dramatic. While this may be a BIT of an annoyance, it truly does bring joy to all of us. Keep it UP!' },
-        { src: 'sona6.GIF', caption: 'I love how you are so very strange in the car. Even though I say otherwise, I love it when we sing together and warm up for choir in the morning.' },
-        { src: 'sona3.jpeg', caption: "My favourite memory of you was when you slepped and fell on the kitchen floor. Your hums were bleeding and it really looked like you didn't have teeth anymore. I remember not even being able to laugh because I was genuinely so worried. I think this just SHOWS how much I care for you, even if I don't say it" },
+        { src: 'sona6.GIF',  caption: 'I love how you are so very strange in the car. Even though I say otherwise, I love it when we sing together and warm up for choir in the morning.' },
+        { src: 'sona3.jpeg', caption: "My favourite memory of you was when you slipped and fell on the kitchen floor. Your gums were bleeding and it really looked like you didn't have teeth anymore. I remember not even being able to laugh because I was genuinely so worried. I think this just SHOWS how much I care for you, even if I don't say it" },
         { src: 'sona4.jpeg', caption: "You break into my room A LOT. While I'm not condoning this behaviour, I want to say that I'm grateful for the time you spend with me. Just sitting around :))" },
         { src: 'sona5.jpeg', caption: 'I am truly grateful for all the hard work you put into helping me complete stuff. Especially when you recorded for my Minister of Faith campaign, and even my biology CPT. I hope that through this new year of life you will continue to grow to nurture your talents, and use them for even greater endeavours than my school work :)))' },
-        { src: 'sona2.JPEG',  caption: 'I think this picture embodies how I view you, slightly odd, but still SHINING' },
+        { src: 'sona2.JPEG', caption: 'I think this picture embodies how I view you, slightly odd, but still SHINING' },
       ]
     },
     {
@@ -438,44 +227,67 @@
     {
       title: 'Joel Pathiyl 🌸',
       photos: [
-        { src: 'joel1.JPG', caption: "Career Fair Picture for someone who has a career in being rude 🥹" },
+        { src: 'joel1.JPG',  caption: "Career Fair Picture for someone who has a career in being rude 🥹" },
         { src: 'joel2.JPEG', caption: "Sargasandhya dancer and babysitter who almost made the kid cry 😪" },
-        { src: 'joel3.JPG', caption: "Flexing for your Joanna Mo-..?" },
-        { src: 'joel4.JPG', caption: "Cake Mixing with us all was fun" },
+        { src: 'joel3.JPG',  caption: "Flexing for your Joanna Mo-..?" },
+        { src: 'joel4.JPG',  caption: "Cake Mixing with us all was fun" },
         { src: 'joel5.JPEG', caption: "Easter Egg painting! and ig yours actually looked pretty nice" },
-        { src: 'joel6.JPG', caption: "RELAY FOR LIFEE! Didn't see you doing laps 😒🤨" },
+        { src: 'joel6.JPG',  caption: "RELAY FOR LIFEE! Didn't see you doing laps 😒🤨" },
       ]
     },
     {
       title: 'Joanna 🌸',
       photos: [
-        { src: 'joel1.jpeg', caption: "" },
-        { src: 'joel2.jpeg', caption: "" },
-        { src: 'joel3.jpeg', caption: "" },
-        { src: 'joel4.jpeg', caption: "" },
-        { src: 'joel5.jpeg', caption: "" },
-        { src: 'joel6.jpeg', caption: "" },
+        { src: 'jo1.jpeg', caption: "Will forever be a core memory... cause why TF would you not do it yourself if you knew how to" },
+        { src: 'jo6.jpeg', caption: "Your clumsiness is beyond words and makes me pee laughing" },
+        { src: 'jo3.jpeg', caption: "Love your screenager/influenced moments" },
+        { src: 'jo4.jpeg', caption: "Love your sassy attitude... especially when we dance" },
+        { src: 'jo5.jpeg', caption: "As serious as this was... will always remember you and how you almost fainted hehehehe" },
+        { src: 'jo2.jpeg', caption: "CAN'T WAIT FOR NEW AND FUN MEMORIES WITH YOU, JUST LIKE THIS ONE WE FINNA HAVE THE BESTEST DAYS EVER" },
       ]
     },
     {
       title: 'Alvin 🌸',
       photos: [
-        { src: 'alvin2.JPG', caption: "That's the first photo I had taken of you I think, IDK, I remember you hating me for it for a lil while" },
-        { src: 'alvin3.jpeg',  caption: "Idk what the day was but I remember js goofing around with you and doing sum bs" },
-        { src: 'alvin1.jpeg', caption: "This one is Sargasandhya, genuienely had the most fun wit u then, acc the best time, although you seemed tired of me at the moment when I took that photo lol" },
+        { src: 'alvin2.JPG',  caption: "That's the first photo I had taken of you I think, IDK, I remember you hating me for it for a lil while" },
+        { src: 'alvin3.jpeg', caption: "Idk what the day was but I remember js goofing around with you and doing sum bs" },
+        { src: 'alvin1.jpeg', caption: "This one is Sargasandhya, genuinely had the most fun wit u then, acc the best time, although you seemed tired of me at the moment when I took that photo lol" },
       ]
-    }
+    },
+    {
+      title: 'Riya 🌸',
+      photos: [
+        { src: 'riya1.jpeg', caption: "This is when I first started getting to know you and I acc didn't know you were Sona's 🤯. When we all started talking more and hanging out more I realized you were Sona's sister and I was so shocked 😳😮. I realized what an amazing person you are and how much of a difference you make in ppl's lives" },
+        { src: 'riya2.jpeg', caption: "You look like such a cutie here 😍🥰" },
+        { src: 'riya3.JPEG', caption: "HAPPY BIRTHDAY SNEHA! We love you so much and we've made so many amazing memories! 💕💕" },
+      ]
+    },
   ];
 
   let currentPage = 0;
 
+  /* ---- Auto-fit text inside card back ---- */
+  function fitText(p) {
+    const back = p.closest('.frame-back');
+    if (!back) return;
+    const maxH = back.clientHeight - 28; // 14px padding top+bottom
+    const maxW = back.clientWidth  - 28;
+    p.style.width = maxW + 'px';
+    let size = 1.15;
+    p.style.fontSize = size + 'rem';
+    // Shrink until text fits vertically
+    while (p.scrollHeight > maxH && size > 0.45) {
+      size = Math.round((size - 0.05) * 100) / 100;
+      p.style.fontSize = size + 'rem';
+    }
+  }
+
   function renderPage(index) {
     const page = pages[index];
-    const grid = document.getElementById('galleryGrid');
+    const grid  = document.getElementById('galleryGrid');
     const title = document.getElementById('galleryTitle');
-    const nav = document.getElementById('galleryNav');
+    const nav   = document.getElementById('galleryNav');
 
-    // Fade out
     grid.style.transition = 'opacity 0.35s ease';
     grid.style.opacity = '0';
 
@@ -492,19 +304,30 @@
         </div>
       `).join('');
 
-      // Nav buttons
+      // Wait one frame for layout, then fit every card
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          grid.querySelectorAll('.frame-back p').forEach(fitText);
+        });
+      });
+
+      // Re-fit on window resize (e.g. orientation change)
+      window._fitResize = () => grid.querySelectorAll('.frame-back p').forEach(fitText);
+      window.removeEventListener('resize', window._fitResize);
+      window.addEventListener('resize', window._fitResize);
+
       nav.innerHTML = '';
       if (index > 0) {
         const prevBtn = document.createElement('button');
         prevBtn.className = 'nav-btn back';
-        prevBtn.innerHTML = `<span class="arrow">←</span> ${pages[index - 1].title.split(' ')[0]}`;
+        prevBtn.innerHTML = `<span class="arrow">←</span> ${pages[index-1].title.split(' ')[0]}`;
         prevBtn.onclick = () => { currentPage = index - 1; renderPage(currentPage); };
         nav.appendChild(prevBtn);
       }
       if (index < pages.length - 1) {
         const nextBtn = document.createElement('button');
         nextBtn.className = 'nav-btn next';
-        nextBtn.innerHTML = `${pages[index + 1].title.split(' ')[0]} <span class="arrow">→</span>`;
+        nextBtn.innerHTML = `${pages[index+1].title.split(' ')[0]} <span class="arrow">→</span>`;
         nextBtn.onclick = () => { currentPage = index + 1; renderPage(currentPage); };
         nav.appendChild(nextBtn);
       }
@@ -541,24 +364,23 @@
     const wRect = wrapper.getBoundingClientRect();
     const W = rect.width, H = rect.height;
     const colors = ['#f9e4c8','#f3cfa0','#f0c898','#faebd4','#f5d9a8','#eedcb0','#f7e2be','#f2cfa0'];
-    const cols = 4, rows = 3;
-    const pts = [];
+    const cols = 4, rows = 3, pts = [];
     for (let r = 0; r <= rows; r++) {
       pts[r] = [];
       for (let c = 0; c <= cols; c++) {
-        const bx = (c / cols) * W, by = (r / rows) * H;
-        const jx = (c === 0 || c === cols) ? 0 : (Math.random()-0.5)*W*0.18;
-        const jy = (r === 0 || r === rows) ? 0 : (Math.random()-0.5)*H*0.18;
-        pts[r][c] = { x: bx+jx, y: by+jy };
+        const bx=(c/cols)*W, by=(r/rows)*H;
+        const jx=(c===0||c===cols)?0:(Math.random()-0.5)*W*0.18;
+        const jy=(r===0||r===rows)?0:(Math.random()-0.5)*H*0.18;
+        pts[r][c]={x:bx+jx,y:by+jy};
       }
     }
-    const ox = rect.left - wRect.left, oy = rect.top - wRect.top;
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const tl=pts[r][c], tr=pts[r][c+1], bl=pts[r+1][c], br=pts[r+1][c+1];
-        const polyPts = [tl,tr,br,bl].map(p=>`${p.x},${p.y}`).join(' ');
+    const ox=rect.left-wRect.left, oy=rect.top-wRect.top;
+    for (let r=0;r<rows;r++) {
+      for (let c=0;c<cols;c++) {
+        const tl=pts[r][c],tr=pts[r][c+1],bl=pts[r+1][c],br=pts[r+1][c+1];
+        const polyPts=[tl,tr,br,bl].map(p=>`${p.x},${p.y}`).join(' ');
         const cx=(tl.x+tr.x+bl.x+br.x)/4, cy=(tl.y+tr.y+bl.y+br.y)/4;
-        const angle=Math.atan2(cy-H/2, cx-W/2);
+        const angle=Math.atan2(cy-H/2,cx-W/2);
         const dist=180+Math.random()*260;
         const tx=Math.cos(angle)*dist+(Math.random()-0.5)*80;
         const ty=Math.sin(angle)*dist+(Math.random()-0.5)*80+120;
@@ -581,8 +403,8 @@
         wrapper.appendChild(piece);
       }
     }
-    setTimeout(()=>{ env.style.visibility='hidden'; },80);
-    setTimeout(()=>{ document.querySelectorAll('.shatter-piece').forEach(el=>el.remove()); },1200);
+    setTimeout(()=>{env.style.visibility='hidden';},80);
+    setTimeout(()=>{document.querySelectorAll('.shatter-piece').forEach(el=>el.remove());},1200);
   }
 
   function openEnvelope() {
@@ -597,14 +419,14 @@
     const photo=document.getElementById('photoWrapper');
     const text=document.getElementById('birthdayText');
     wrapper.classList.add('opened');
-    hint.classList.add('hide'); 
+    hint.classList.add('hide');
     flap.classList.add('open');
     seal.classList.add('hide');
     setTimeout(launchConfetti, 300);
     setTimeout(shatterEnvelope, 350);
-    setTimeout(()=>{ photo.classList.add('open'); }, 700);
-    setTimeout(()=>{ text.classList.add('show'); }, 1150);
-    setTimeout(()=>{ document.getElementById('viewMoreBtn').classList.add('show'); }, 2000);
+    setTimeout(()=>{photo.classList.add('open');}, 700);
+    setTimeout(()=>{text.classList.add('show');}, 1150);
+    setTimeout(()=>{document.getElementById('viewMoreBtn').classList.add('show');}, 2000);
   }
 
   function showGallery() {
