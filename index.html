@@ -1,0 +1,466 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Sneha 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #f43f72;
+    --gold: #f5c842;
+    --cream: #fff8f0;
+    --envelope: #f9e4c8;
+    --envelope-flap: #f3cfa0;
+    --envelope-dark: #f0c898;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    background: var(--cream);
+    background-image:
+      radial-gradient(ellipse at 20% 50%, #ffe0ec 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, #fff0c2 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, #fde0f0 0%, transparent 50%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; overflow-x: hidden; position: relative;
+  }
+  .dot { position: absolute; border-radius: 50%; opacity: 0.15; pointer-events: none; animation: floatDot linear infinite; }
+  @keyframes floatDot {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.15; } 90% { opacity: 0.15; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+  .scene { position: relative; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+  .birthday-text {
+    font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 8vw, 5.5rem);
+    color: var(--rose); text-align: center; opacity: 0; transform: translateY(20px) scale(0.8);
+    transition: opacity 0.8s cubic-bezier(.34,1.56,.64,1), transform 0.8s cubic-bezier(.34,1.56,.64,1);
+    text-shadow: 0 4px 30px rgba(244,63,114,0.3); margin-top: 47px; letter-spacing: 1px;
+    pointer-events: none; user-select: none; width: 100%; padding: 0 12px; white-space: nowrap;
+  }
+  .hb-line { display: inline; }
+  @media (max-width: 480px) {
+    .birthday-text { font-size: clamp(1rem, 9.5vw, 2.8rem); letter-spacing: 0; white-space: normal; }
+    .hb-line { display: block; }
+  }
+  .birthday-text.show { opacity: 1; transform: translateY(0) scale(1); }
+  .birthday-text span { display: inline-block; animation: none; }
+  .birthday-text.show span { animation: letterBounce 0.6s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes letterBounce { 0% { transform: translateY(15px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+  .photo-wrapper {
+    position: absolute; bottom: 40%; left: 50%; transform: translateX(-50%);
+    z-index: 8; overflow: hidden; width: 220px; height: 0; border-radius: 16px;
+    transition: height 0.9s cubic-bezier(.22,1,.36,1), box-shadow 0.9s ease;
+  }
+  .photo-wrapper.open { height: 320px; box-shadow: 0 -12px 50px rgba(244,63,114,0.25); }
+  .photo-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 16px; }
+  .envelope-wrapper {
+    position: relative; z-index: 20; cursor: pointer; user-select: none;
+    filter: drop-shadow(0 10px 40px rgba(244,63,114,0.15)); transition: filter 0.3s ease, transform 0.3s ease;
+  }
+  .envelope-wrapper:hover { filter: drop-shadow(0 16px 50px rgba(244,63,114,0.3)); transform: scale(1.02); }
+  .envelope-wrapper.opened { cursor: default; }
+  .envelope { width: 300px; height: 200px; position: relative; }
+  .env-body { position: absolute; bottom: 0; left: 0; width: 300px; height: 180px; background: var(--envelope); border-radius: 4px 4px 12px 12px; overflow: hidden; }
+  .env-body::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 0 0 90px 150px; border-color: transparent transparent var(--envelope-flap) transparent; }
+  .env-body::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 150px 90px 0; border-color: transparent var(--envelope-flap) transparent transparent; }
+  .env-left { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-style: solid; border-width: 90px 0 90px 150px; border-color: transparent transparent transparent var(--envelope-dark); }
+  .env-right { position: absolute; bottom: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 90px 150px 90px 0; border-color: transparent var(--envelope-dark) transparent transparent; }
+  .env-flap { position: absolute; top: 0; left: 0; width: 300px; height: 0; border-style: solid; border-width: 105px 150px 0 150px; border-color: var(--envelope-flap) transparent transparent transparent; transform-origin: top center; transition: transform 0.7s cubic-bezier(.4,0,.2,1); z-index: 3; }
+  .env-flap.open { transform: rotateX(180deg); }
+  .env-seal { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); font-size: 1.8rem; z-index: 4; transition: opacity 0.3s ease, transform 0.5s ease; }
+  .env-seal.hide { opacity: 0; transform: translateX(-50%) scale(0); }
+  .tap-hint { position: absolute; bottom: -36px; left: 50%; transform: translateX(-50%); font-size: 0.72rem; color: rgba(150,60,90,0.6); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; animation: hintPulse 2s ease-in-out infinite; pointer-events: none; }
+  @keyframes hintPulse { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+  .tap-hint.hide { display: none; }
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: hidden; }
+  .confetti-piece { position: absolute; top: -20px; border-radius: 2px; animation: confettiFall linear forwards; opacity: 0; }
+  @keyframes confettiFall { 0% { opacity: 1; transform: translateY(0) rotate(0deg) translateX(0); } 100% { opacity: 0; transform: translateY(105vh) rotate(720deg) translateX(var(--drift)); } }
+  .view-more-btn {
+    opacity: 0; transform: translateY(10px); margin-top: 28px; background: transparent;
+    border: 2px solid var(--rose); color: var(--rose); font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 10px 28px;
+    border-radius: 50px; cursor: pointer; pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .view-more-btn.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .view-more-btn:hover { background: var(--rose); color: white; }
+  .gallery-page { display: none; flex-direction: column; align-items: center; padding: 48px 24px 48px; width: 100%; min-height: 100vh; z-index: 10; position: relative; }
+  .gallery-page.show { display: flex; }
+  .gallery-title { font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 6vw, 3.5rem); color: var(--rose); text-shadow: 0 4px 20px rgba(244,63,114,0.25); margin-bottom: 12px; text-align: center; }
+  .gallery-subtitle { font-size: 0.78rem; color: rgba(194,52,90,0.6); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 32px; animation: hintPulse 2s ease-in-out infinite; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; max-width: 720px; }
+  @media (max-width: 480px) { .gallery-grid { grid-template-columns: 1fr; max-width: 340px; } }
+
+  /* ---- FRAME & FLIP CARD ---- */
+  .frame {
+    aspect-ratio: 3/4; border-radius: 16px; overflow: visible; opacity: 0;
+    transform: translateY(24px) scale(0.95); transition: opacity 0.5s ease, transform 0.5s ease;
+    cursor: pointer; perspective: 1000px; position: relative;
+  }
+  .frame.show { opacity: 1; transform: translateY(0) scale(1); }
+  .frame-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(.4,0,.2,1); border-radius: 16px; }
+  .frame.flipped .frame-inner { transform: rotateY(180deg); }
+  .frame-front, .frame-back {
+    position: absolute; inset: 0; border-radius: 16px;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden;
+  }
+  .frame-front { border: 3px solid #f3cfa0; box-shadow: 0 6px 24px rgba(244,63,114,0.1); }
+  .frame-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .frame-back {
+    background: linear-gradient(160deg, #fff0f5 0%, #ffecd6 100%);
+    border: 3px solid #f3cfa0; box-shadow: 0 6px 24px rgba(244,63,114,0.15);
+    transform: rotateY(180deg);
+    /* key: fill height, clip overflow, center content */
+    display: flex; align-items: center; justify-content: center;
+    padding: 14px; overflow: hidden;
+  }
+  .frame-back p {
+    font-family: 'Dancing Script', cursive;
+    /* font-size set by JS fitText — no clamp here */
+    color: #c2345a; text-align: center; line-height: 1.45;
+    word-break: break-word; overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  .frame-click-hint {
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(244,63,114,0.78); color: white; font-family: 'DM Sans', sans-serif;
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 13px; border-radius: 50px; white-space: nowrap;
+    pointer-events: none; z-index: 5; animation: hintPulse 2s ease-in-out infinite; transition: opacity 0.3s ease;
+  }
+  .frame.flipped .frame-click-hint { opacity: 0; }
+  .gallery-nav { display: flex; gap: 16px; margin-top: 48px; flex-wrap: wrap; justify-content: center; }
+  .nav-btn {
+    background: transparent; border: 2px solid var(--rose); color: var(--rose);
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 10px 28px; border-radius: 50px; cursor: pointer;
+    display: flex; align-items: center; gap: 10px; transition: background 0.2s ease, color 0.2s ease;
+  }
+  .nav-btn:hover { background: var(--rose); color: white; }
+  .nav-btn .arrow { font-size: 1rem; transition: transform 0.2s ease; }
+  .nav-btn.back:hover .arrow { transform: translateX(-4px); }
+  .nav-btn.next:hover .arrow { transform: translateX(4px); }
+  .shatter-piece { position: absolute; pointer-events: none; z-index: 25; animation: shatterFly var(--dur) cubic-bezier(.2,.8,.4,1) forwards; transform-origin: center center; }
+  @keyframes shatterFly { 0% { opacity: 1; transform: translate(0,0) rotate(0deg) scale(1); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3); } }
+</style>
+</head>
+<body>
+<div class="confetti-container" id="confetti"></div>
+<div class="scene">
+  <div class="photo-wrapper" id="photoWrapper"><img src="rue.png" alt="Sneha"></div>
+  <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope()">
+    <div class="envelope" id="envelope">
+      <div class="env-body"><div class="env-left"></div><div class="env-right"></div></div>
+      <div class="env-flap" id="envFlap"></div>
+      <div class="env-seal" id="envSeal">💌</div>
+    </div>
+    <div class="tap-hint" id="tapHint">Tap to open</div>
+  </div>
+  <div class="birthday-text" id="birthdayText">
+    <span class="hb-line"><span style="animation-delay:0.0s">H</span><span style="animation-delay:0.05s">a</span><span style="animation-delay:0.10s">p</span><span style="animation-delay:0.15s">p</span><span style="animation-delay:0.20s">y</span>&nbsp;<span style="animation-delay:0.30s">B</span><span style="animation-delay:0.35s">i</span><span style="animation-delay:0.40s">r</span><span style="animation-delay:0.45s">t</span><span style="animation-delay:0.50s">h</span><span style="animation-delay:0.55s">d</span><span style="animation-delay:0.60s">a</span><span style="animation-delay:0.65s">y</span></span><span class="hb-line"><span style="animation-delay:0.75s;color:#f5c842;">S</span><span style="animation-delay:0.80s;color:#f5c842;">n</span><span style="animation-delay:0.85s;color:#f5c842;">e</span><span style="animation-delay:0.90s;color:#f5c842;">h</span><span style="animation-delay:0.95s;color:#f5c842;">a</span></span>
+  </div>
+  <button class="view-more-btn" id="viewMoreBtn" onclick="showGallery()">View More</button>
+</div>
+
+<div class="gallery-page" id="galleryPage">
+  <div class="gallery-title" id="galleryTitle">Birthday Girl 🌸</div>
+  <div class="gallery-subtitle">Tap a photo to flip it</div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+  <div class="gallery-nav" id="galleryNav"></div>
+</div>
+
+<script>
+  let opened = false;
+  const swoosh = new Audio('swoosh.mp3');
+  swoosh.preload = 'auto';
+  const song = new Audio('song.mp3');
+  song.preload = 'auto';
+  song.loop = true;
+  swoosh.addEventListener('ended', () => { song.play().catch(() => {}); });
+
+  const dotColors = ['#f43f72','#f5c842','#ffc0d0','#ffdb70','#ff8fab'];
+  for (let i = 0; i < 18; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    const size = 8 + Math.random() * 30;
+    d.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${dotColors[Math.floor(Math.random()*dotColors.length)]};animation-duration:${10+Math.random()*20}s;animation-delay:${Math.random()*15}s;`;
+    document.body.appendChild(d);
+  }
+
+  const pages = [
+    {
+      title: 'Joel Tomy 🌸',
+      photos: [
+        { src: 'first.jpeg',    caption: 'That one snowball fight during that one walk' },
+        { src: 'face.png',      caption: 'If only Joel Alex slapped you harder' },
+        { src: 'hair.jpeg',     caption: "The buzz would've gone hard" },
+        { src: 'backstab.jpeg', caption: 'The day enchanted escape became an emotional Tear Fest' },
+        { src: 'flute.jpeg',    caption: 'Stick to the flute please 🫶' },
+        { src: 'smile.jpeg',    caption: 'Say cheese 📸' },
+      ]
+    },
+    {
+      title: 'Sandhra 🌸',
+      photos: [
+        { src: 'Sand1.JPG',  caption: "I took this photo when we went to India and it is one of my favourites! I thought you should keep a copy too so that you can remember all the jokes we shared that day." },
+        { src: 'Sand2.JPG',  caption: "You should have picked the saxophone! It seemed to fit you so well. I'm glad that you chose the flure though since all three of us can play together and teach each other'" },
+        { src: 'Sand3.JPG', caption: "Thank you for staying up with me on our first sleeping train ride. You always contribute to the atmosphere in ways you may not realize. Always remember that you are loved!" },
+        { src: 'Sand4.JPG', caption: "I wish you the happiest year! Let us keep sharing memories as sweet as Läderach and Lipton Iced Tea!" },
+        { src: 'Sand5.JPG', caption: "Even if you are sixteen now, you always look like this little kid to me! I know I don't take a lot of pictures so I'm happy that you took them for me instead, because now I get to look back at these memories" },
+        { src: 'Sand6.JPG', caption: "I'm so proud of you! Your genuine smile is so contagious. I hope that you achieve all of your goals and truly succeed!" },
+      ]
+    },
+    {
+      title: 'Sona 🌸',
+      photos: [
+        { src: 'sona1.PNG',  caption: 'You are very dramatic. While this may be a BIT of an annoyance, it truly does bring joy to all of us. Keep it UP!' },
+        { src: 'sona6.GIF',  caption: 'I love how you are so very strange in the car. Even though I say otherwise, I love it when we sing together and warm up for choir in the morning.' },
+        { src: 'sona3.jpeg', caption: "My favourite memory of you was when you slipped and fell on the kitchen floor. Your gums were bleeding and it really looked like you didn't have teeth anymore. I remember not even being able to laugh because I was genuinely so worried. I think this just SHOWS how much I care for you, even if I don't say it" },
+        { src: 'sona4.jpeg', caption: "You break into my room A LOT. While I'm not condoning this behaviour, I want to say that I'm grateful for the time you spend with me. Just sitting around :))" },
+        { src: 'sona5.jpeg', caption: 'I am truly grateful for all the hard work you put into helping me complete stuff. Especially when you recorded for my Minister of Faith campaign, and even my biology CPT. I hope that through this new year of life you will continue to grow to nurture your talents, and use them for even greater endeavours than my school work :)))' },
+        { src: 'sona2.JPEG', caption: 'I think this picture embodies how I view you, slightly odd, but still SHINING' },
+      ]
+    },
+    {
+      title: 'Andrea 🌸',
+      photos: [
+        { src: 'andrea1.jpeg', caption: 'Had lots of fun watching ur struggle' },
+        { src: 'andrea2.jpeg', caption: 'Grieving the sword u wishied u were born with' },
+        { src: 'andrea4.jpeg', caption: 'Such a phone addict' },
+        { src: 'andrea3.JPEG', caption: "We're such baddies" },
+        { src: 'andrea5.jpeg', caption: 'We thought we were cool' },
+        { src: 'andrea6.jpeg', caption: 'Gonna miss our prayer meeting chaos' },
+      ]
+    },
+    {
+      title: 'Joel Pathiyl 🌸',
+      photos: [
+        { src: 'joel1.JPG',  caption: "Career Fair Picture for someone who has a career in being rude 🥹" },
+        { src: 'joel2.JPEG', caption: "Sargasandhya dancer and babysitter who almost made the kid cry 😪" },
+        { src: 'joel3.JPG',  caption: "Flexing for your Joanna Mo-..?" },
+        { src: 'joel4.JPG',  caption: "Cake Mixing with us all was fun" },
+        { src: 'joel5.JPEG', caption: "Easter Egg painting! and ig yours actually looked pretty nice" },
+        { src: 'joel6.JPG',  caption: "RELAY FOR LIFEE! Didn't see you doing laps 😒🤨" },
+      ]
+    },
+    {
+      title: 'Joanna 🌸',
+      photos: [
+        { src: 'jo1.jpeg', caption: "Will forever be a core memory... cause why TF would you not do it yourself if you knew how to" },
+        { src: 'jo6.jpeg', caption: "Your clumsiness is beyond words and makes me pee laughing" },
+        { src: 'jo3.jpeg', caption: "Love your screenager/influenced moments" },
+        { src: 'jo4.jpeg', caption: "Love your sassy attitude... especially when we dance" },
+        { src: 'jo5.jpeg', caption: "As serious as this was... will always remember you and how you almost fainted hehehehe" },
+        { src: 'jo2.jpeg', caption: "CAN'T WAIT FOR NEW AND FUN MEMORIES WITH YOU, JUST LIKE THIS ONE WE FINNA HAVE THE BESTEST DAYS EVER" },
+      ]
+    },
+    {
+      title: 'Mariann 🌸',
+      photos: [
+        { src: 'ma1.jpeg', caption: "When you told me your butt hurt after sitting for so long at anchored, I could relate so well" },
+        { src: 'ma2.jpeg', caption: "Seeing u put the fireman suit was really funny but also cute" },
+        { src: 'ma3.jpeg', caption: "Surprisng/scaring u at the bathroom at Joan of Arc made me laugh" },
+        { src: 'ma4.jpeg', caption: "Prayer meetings with you are really fun (especially when u glaze my humour for no reason).. I'm going to miss them'" },
+        { src: 'ma5.jpeg', caption: "oh my what big eyes u have (Sargasandhya)" },
+      ]
+    },
+    {
+      title: 'Alvin 🌸',
+      photos: [
+        { src: 'alvin2.JPG',  caption: "That's the first photo I had taken of you I think, IDK, I remember you hating me for it for a lil while" },
+        { src: 'alvin3.jpeg', caption: "Idk what the day was but I remember js goofing around with you and doing sum bs" },
+        { src: 'alvin1.jpeg', caption: "This one is Sargasandhya, genuinely had the most fun wit u then, acc the best time, although you seemed tired of me at the moment when I took that photo lol" },
+      ]
+    },
+    {
+      title: 'Riya 🌸',
+      photos: [
+        { src: 'riya1.jpeg', caption: "This is when I first started getting to know you and I acc didn't know you were Sona's 🤯. When we all started talking more and hanging out more I realized you were Sona's sister and I was so shocked 😳😮. I realized what an amazing person you are and how much of a difference you make in ppl's lives" },
+        { src: 'riya2.jpeg', caption: "You look like such a cutie here 😍🥰" },
+        { src: 'riya3.JPEG', caption: "HAPPY BIRTHDAY SNEHA! We love you so much and we've made so many amazing memories! 💕💕" },
+      ]
+    },
+  ];
+
+  let currentPage = 0;
+
+  /* ---- Auto-fit text inside card back ---- */
+  function fitText(p) {
+    const back = p.closest('.frame-back');
+    if (!back) return;
+    const maxH = back.clientHeight - 28; // 14px padding top+bottom
+    const maxW = back.clientWidth  - 28;
+    p.style.width = maxW + 'px';
+    let size = 1.15;
+    p.style.fontSize = size + 'rem';
+    // Shrink until text fits vertically
+    while (p.scrollHeight > maxH && size > 0.45) {
+      size = Math.round((size - 0.05) * 100) / 100;
+      p.style.fontSize = size + 'rem';
+    }
+  }
+
+  function renderPage(index) {
+    const page = pages[index];
+    const grid  = document.getElementById('galleryGrid');
+    const title = document.getElementById('galleryTitle');
+    const nav   = document.getElementById('galleryNav');
+
+    grid.style.transition = 'opacity 0.35s ease';
+    grid.style.opacity = '0';
+
+    setTimeout(() => {
+      title.textContent = page.title;
+
+      grid.innerHTML = page.photos.map((p, i) => `
+        <div class="frame" onclick="this.classList.toggle('flipped')">
+          <div class="frame-inner">
+            <div class="frame-front"><img src="${p.src}" alt="Photo ${i+1}"></div>
+            <div class="frame-back"><p>${p.caption}</p></div>
+          </div>
+          <div class="frame-click-hint">Tap to flip</div>
+        </div>
+      `).join('');
+
+      // Wait one frame for layout, then fit every card
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          grid.querySelectorAll('.frame-back p').forEach(fitText);
+        });
+      });
+
+      // Re-fit on window resize (e.g. orientation change)
+      window._fitResize = () => grid.querySelectorAll('.frame-back p').forEach(fitText);
+      window.removeEventListener('resize', window._fitResize);
+      window.addEventListener('resize', window._fitResize);
+
+      nav.innerHTML = '';
+      if (index > 0) {
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'nav-btn back';
+        prevBtn.innerHTML = `<span class="arrow">←</span> ${pages[index-1].title.split(' ')[0]}`;
+        prevBtn.onclick = () => { currentPage = index - 1; renderPage(currentPage); };
+        nav.appendChild(prevBtn);
+      }
+      if (index < pages.length - 1) {
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'nav-btn next';
+        nextBtn.innerHTML = `${pages[index+1].title.split(' ')[0]} <span class="arrow">→</span>`;
+        nextBtn.onclick = () => { currentPage = index + 1; renderPage(currentPage); };
+        nav.appendChild(nextBtn);
+      }
+
+      grid.style.opacity = '0';
+      setTimeout(() => {
+        grid.style.opacity = '1';
+        grid.querySelectorAll('.frame').forEach((f, i) => {
+          setTimeout(() => f.classList.add('show'), i * 100);
+        });
+      }, 30);
+
+    }, 350);
+  }
+
+  function launchConfetti() {
+    const container = document.getElementById('confetti');
+    const cols = ['#f43f72','#f5c842','#ff8fab','#7ee8a2','#80b3ff','#ffcf56','#fc6c85','#c084fc'];
+    for (let i = 0; i < 120; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const size = 6 + Math.random() * 10;
+      const drift = (Math.random() - 0.5) * 400;
+      piece.style.cssText = `left:${10+Math.random()*80}%;width:${size}px;height:${size}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${1.8+Math.random()*2.2}s;animation-delay:${Math.random()*0.8}s;--drift:${drift}px;transform:rotate(${Math.random()*360}deg);`;
+      container.appendChild(piece);
+    }
+    setTimeout(() => { container.innerHTML = ''; }, 4500);
+  }
+
+  function shatterEnvelope() {
+    const wrapper = document.getElementById('envelopeWrapper');
+    const env = document.getElementById('envelope');
+    const rect = env.getBoundingClientRect();
+    const wRect = wrapper.getBoundingClientRect();
+    const W = rect.width, H = rect.height;
+    const colors = ['#f9e4c8','#f3cfa0','#f0c898','#faebd4','#f5d9a8','#eedcb0','#f7e2be','#f2cfa0'];
+    const cols = 4, rows = 3, pts = [];
+    for (let r = 0; r <= rows; r++) {
+      pts[r] = [];
+      for (let c = 0; c <= cols; c++) {
+        const bx=(c/cols)*W, by=(r/rows)*H;
+        const jx=(c===0||c===cols)?0:(Math.random()-0.5)*W*0.18;
+        const jy=(r===0||r===rows)?0:(Math.random()-0.5)*H*0.18;
+        pts[r][c]={x:bx+jx,y:by+jy};
+      }
+    }
+    const ox=rect.left-wRect.left, oy=rect.top-wRect.top;
+    for (let r=0;r<rows;r++) {
+      for (let c=0;c<cols;c++) {
+        const tl=pts[r][c],tr=pts[r][c+1],bl=pts[r+1][c],br=pts[r+1][c+1];
+        const polyPts=[tl,tr,br,bl].map(p=>`${p.x},${p.y}`).join(' ');
+        const cx=(tl.x+tr.x+bl.x+br.x)/4, cy=(tl.y+tr.y+bl.y+br.y)/4;
+        const angle=Math.atan2(cy-H/2,cx-W/2);
+        const dist=180+Math.random()*260;
+        const tx=Math.cos(angle)*dist+(Math.random()-0.5)*80;
+        const ty=Math.sin(angle)*dist+(Math.random()-0.5)*80+120;
+        const rot=(Math.random()-0.5)*540, dur=0.55+Math.random()*0.35;
+        const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+        svg.setAttribute('width',W); svg.setAttribute('height',H);
+        svg.style.cssText=`position:absolute;top:${oy}px;left:${ox}px;overflow:visible;`;
+        const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+        poly.setAttribute('points',polyPts);
+        poly.setAttribute('fill',colors[Math.floor(Math.random()*colors.length)]);
+        poly.setAttribute('stroke','#e8c88a'); poly.setAttribute('stroke-width','0.5');
+        svg.appendChild(poly);
+        const piece=document.createElement('div');
+        piece.className='shatter-piece';
+        piece.style.setProperty('--tx',tx+'px');
+        piece.style.setProperty('--ty',ty+'px');
+        piece.style.setProperty('--rot',rot+'deg');
+        piece.style.setProperty('--dur',dur+'s');
+        piece.appendChild(svg);
+        wrapper.appendChild(piece);
+      }
+    }
+    setTimeout(()=>{env.style.visibility='hidden';},80);
+    setTimeout(()=>{document.querySelectorAll('.shatter-piece').forEach(el=>el.remove());},1200);
+  }
+
+  function openEnvelope() {
+    if (opened) return;
+    opened = true;
+    swoosh.currentTime = 0;
+    swoosh.play().catch(()=>{});
+    const wrapper=document.getElementById('envelopeWrapper');
+    const flap=document.getElementById('envFlap');
+    const seal=document.getElementById('envSeal');
+    const hint=document.getElementById('tapHint');
+    const photo=document.getElementById('photoWrapper');
+    const text=document.getElementById('birthdayText');
+    wrapper.classList.add('opened');
+    hint.classList.add('hide');
+    flap.classList.add('open');
+    seal.classList.add('hide');
+    setTimeout(launchConfetti, 300);
+    setTimeout(shatterEnvelope, 350);
+    setTimeout(()=>{photo.classList.add('open');}, 700);
+    setTimeout(()=>{text.classList.add('show');}, 1150);
+    setTimeout(()=>{document.getElementById('viewMoreBtn').classList.add('show');}, 2000);
+  }
+
+  function showGallery() {
+    const scene = document.querySelector('.scene');
+    scene.style.transition = 'opacity 0.4s ease';
+    scene.style.opacity = '0';
+    setTimeout(() => {
+      scene.style.display = 'none';
+      currentPage = 0;
+      renderPage(0);
+      document.getElementById('galleryPage').classList.add('show');
+    }, 400);
+  }
+</script>
+</body>
+</html>
